@@ -1,0 +1,67 @@
+      <dialog class="modal" id="contact-modal" aria-labelledby="h-modal" aria-describedby="modal-desc">
+        <div class="modal-head">
+          <div>
+            <h2 id="h-modal">Görüşme talebi</h2>
+            <p id="modal-desc">Birkaç bilgi yeterli; iki iş günü içinde dönüyoruz.</p>
+          </div>
+          <button class="modal-close" type="button" data-contact-close aria-label="Kapat"><span aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+          <form class="form" id="contact-form" action="https://formspree.io/f/mqppyagr" method="POST" novalidate aria-describedby="form-hint">
+            <div class="field half">
+              <label for="f-kisi">Ad soyad <span class="req" aria-hidden="true">*</span><span class="sr-only">(zorunlu)</span></label>
+              <input id="f-kisi" name="kisi" type="text" autocomplete="name" maxlength="100" required>
+            </div>
+            <div class="field half">
+              <label for="f-email">E-posta <span class="req" aria-hidden="true">*</span><span class="sr-only">(zorunlu)</span></label>
+              <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="160" spellcheck="false" required>
+            </div>
+            <div class="field half">
+              <label for="f-sirket">Şirket adı <span class="req" aria-hidden="true">*</span><span class="sr-only">(zorunlu)</span></label>
+              <input id="f-sirket" name="sirket" type="text" autocomplete="organization" maxlength="120" required>
+            </div>
+            <div class="field half">
+              <label for="f-tel">Telefon</label>
+              <input id="f-tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" maxlength="30">
+            </div>
+            <div class="field half">
+              <label for="f-alan">Ne üretiyorsunuz?</label>
+              <input id="f-alan" name="alan" type="text" maxlength="120" placeholder="Örn. otomotiv yan sanayi">
+            </div>
+            <div class="field half">
+              <label for="f-modul">İlgilendiğiniz konu</label>
+              <select id="f-modul" name="modul">
+                <option value="Satın alma otomasyonu">Satın alma otomasyonu</option>
+                <option value="Şirketin kendi asistanı">Şirketin kendi asistanı</option>
+                <option value="Her ikisi">Her ikisi</option>
+                <option value="8 haftalık pilot">8 haftalık pilot</option>
+                <option value="Henüz emin değilim">Henüz emin değilim</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="f-not">Kısaca ne lazım?</label>
+              <textarea id="f-not" name="not" rows="4" maxlength="2000"></textarea>
+            </div>
+            <!-- Bot tuzağı (honeypot): gerçek kullanıcı görmez; doluysa gönderim atılır. Formspree de _gotcha alanını tanır. -->
+            <div class="hp" aria-hidden="true">
+              <label for="f-gotcha">Bu alanı boş bırakın</label>
+              <input id="f-gotcha" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
+            </div>
+            <input type="hidden" name="_subject" value="Görüşme talebi">
+            <input type="hidden" name="dil" value="tr">
+            <div class="full recaptcha-slot" data-recaptcha></div>
+            <p class="form-status full" role="alert" hidden></p>
+            <div class="full form-foot">
+              <button class="btn btn-primary" type="submit">Gönder <span class="arr" aria-hidden="true">→</span></button>
+              <p class="form-hint" id="form-hint">* işaretli alanlar zorunlu.</p>
+            </div>
+            <p class="form-privacy full">Bilgileriniz yalnızca size dönüş yapmak için kullanılır ve form hizmeti Formspree üzerinden bize iletilir.</p>
+          </form>
+          <div class="form-success" data-form-success hidden tabindex="-1">
+            <span class="ok-mark" aria-hidden="true">✓</span>
+            <h3>Mesajınız bize ulaştı.</h3>
+            <p>Teşekkürler. İki iş günü içinde verdiğiniz e-posta adresinden dönüş yapacağız.</p>
+            <button class="btn btn-ghost" type="button" data-contact-close>Kapat</button>
+          </div>
+        </div>
+      </dialog>

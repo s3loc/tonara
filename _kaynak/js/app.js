@@ -2,6 +2,7 @@
   'use strict';
 
   var root = document.documentElement;
+  var PAGE = root.getAttribute('data-page') || 'home';   // her sayfanın <html data-page="..."> değeri
   var reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   function each(list, fn) { for (var i = 0; i < list.length; i++) fn(list[i], i); }
   function $(sel, ctx) { return (ctx || document).querySelector(sel); }
@@ -11,7 +12,7 @@
 
   /* ------------------------------------------------------------------
      DİL (TR / EN) — sayfa Türkçe yazılır. İngilizce seçilince her metin
-     parçası js/i18n-en.js sözlüğünden karşılığıyla değiştirilir, Türkçe
+     parçası sayfaya gömülü İngilizce sözlükten (_kaynak/js/i18n-en.js) karşılığıyla değiştirilir, Türkçe
      seçilince aslına döner. Yalnızca textContent / setAttribute kullanılır
      (innerHTML yok), sözlükten HTML enjekte edilemez.
      ------------------------------------------------------------------ */
@@ -460,44 +461,36 @@
     });
   }
 
-  /* Sayfadaki "Tanışalım" / "Pilot için başvurun" bağlantıları iletişim bölümüne gider ve formu açar.
+  /* Sayfadaki "Tanışalım" / "Pilot için başvurun" bağlantıları formu açar. Ana sayfada iletişim
+     bölümüne de kayar; alt sayfalarda form o sayfada açılır (JS kapalıysa bağlantı /#iletisim'e gider).
      data-pick taşıyanlar formda ilgili konuyu (ör. "8 haftalık pilot") işaretler. */
   document.addEventListener('click', function (e) {
-    var a = e.target.closest ? e.target.closest('a[href="#iletisim"]') : null;
-    if (!a || !form) return;
+    var a = e.target.closest ? e.target.closest('a[href]') : null;
+    if (!a || !form || a.hash !== '#iletisim' || a.pathname !== (PAGE === 'home' ? location.pathname : '/')) return;
     var pick = a.getAttribute('data-pick');
     if (pick) {
       each(form.elements.modul.options, function (o) { if (o.value === pick) form.elements.modul.value = pick; });
     }
-    if (e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey) setTimeout(function () { openModal(a); }, 0);
+    if (e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey) {
+      if (PAGE !== 'home') e.preventDefault();
+      setTimeout(function () { openModal(a); }, 0);
+    }
   });
 
   /* ------------------------------------------------------------------
-     SAYFALAR — tek dosya içinde, adres çubuğundaki #/... ile seçilir.
-     Yeni sayfa eklemek için: HTML'de <div class="view" data-view="ad"> ve burada ROUTES'a bir kayıt.
-     #bolum biçimindeki adres, o bölümü içeren sayfayı açıp bölüme kayar.
-     Tanımsız #/... adresi 404 görünümünü ("ad") açar.
+     SAYFA — her sayfa ayrı dosya. Menüdeki aria-current HTML'de yazılı;
+     burada yalnızca grup düğmesinin vurgusu, sayfa içi çapalar ve başlık/açıklamanın çevirisi var.
      ------------------------------------------------------------------ */
   var metaDesc = $('meta[name="description"]');
-  var ROUTES = {
-    home: { path: '', name: 'Ana sayfa', title: 'İşinizi bilen yapay zeka, kendi sunucunuzda', desc: metaDesc ? metaDesc.getAttribute('content') : '' },
-    pilot: { path: '#/pilot', name: '8 haftalık pilot', title: '8 haftalık pilot', desc: 'Yapay zekayı 8 hafta boyunca tek departmanda, gerçek bir işte deneyin. Hafta hafta plan, kapsam ve ücret: 60.000 TL + KDV, tek sefer.' },
-    hakkimizda: { path: '#/hakkimizda', name: 'Hakkımızda', title: 'Hakkımızda', desc: 'Kimiz, nereden geliyoruz, nasıl çalışıyoruz, şu an hangi aşamadayız: üretim firmalarının kendi sunucusuna yapay zeka kuran yeni bir girişim.' },
-    paketler: { path: '#/paketler', name: 'Paketler', title: 'Paketler', desc: 'Başlangıç, Profesyonel ve Kurumsal paketlerin karşılaştırması: modül, kullanıcı, bağlanan sistem, tahmini kurulum ve destek süresi.' },
-    senaryolar: { path: '#/senaryolar', name: 'Senaryolar', title: 'Senaryolar', desc: 'Beş kurgusal örnek: yapay zeka günlük işte ne yapar, nerede durur, kim onaylar ve neye dokunmaz.' },
-    guvenlik: { path: '#/guvenlik', name: 'Güvenliği nasıl sağlıyoruz', title: 'Güvenliği nasıl sağlıyoruz', desc: 'Yedi güvenlik katmanı, yapay zekaya özgü riskler, belgeye gizlenmiş talimatla ilgili ölçümlerimiz ve henüz yapmadıklarımız.' },
-    muhakeme: { path: '#/muhakeme', name: 'Sistem nasıl karar verir', title: 'Sistem nasıl karar verir', desc: 'Bir soru ve bir sipariş önerisi sistemde hangi adımlardan geçer: model öneri üretir, kod karar verir, insan onaylar.' },
-    projeler: { path: '#/projeler', name: 'Projeler', title: 'Projeler', desc: 'AXIS, AXIS Control Plane, VARUX Control, VARUX Analytics ve SENTINEL: problem, yapılan iş, teknoloji ve kanıt.' },
-    ad: { path: null, name: 'Sayfa bulunamadı', title: 'Sayfa bulunamadı', desc: 'Aradığınız sayfa bulunamadı.' }
-  };
-
-  var views = {};
-  each($$('[data-view]'), function (el) { views[el.getAttribute('data-view')] = el; });
-  var routeLinks = $$('.menu [data-route-link]');
-  var announcer = document.getElementById('route-announcer');
-  var current = null;
+  var baseTitle = document.title;
+  var baseDesc = metaDesc ? metaDesc.getAttribute('content') : '';
+  var pageH1 = $('main h1');
   var spyLinks = {};
-  each($$('.menu a[href^="#"]:not(.menu-cta):not([data-route-link])'), function (a) { spyLinks[a.getAttribute('href').slice(1)] = a; });
+  if (PAGE === 'home') {
+    each($$('.menu a[href*="#"]:not(.menu-cta)'), function (a) {
+      if (a.pathname === location.pathname && a.hash.length > 1) spyLinks[a.hash.slice(1)] = a;
+    });
+  }
 
   function syncGroups() {
     each(dds, function (dd) {
@@ -505,71 +498,25 @@
     });
   }
   function clearSpy() { for (var k in spyLinks) if (has(spyLinks, k)) spyLinks[k].classList.remove('active'); }
-  function setMeta(name) {
-    document.title = brand + ' | ' + T(ROUTES[name].title);
-    if (metaDesc) metaDesc.setAttribute('content', T(ROUTES[name].desc));
+  function setMeta() {
+    document.title = T(baseTitle);
+    if (metaDesc) metaDesc.setAttribute('content', T(baseDesc));
   }
 
-  // Kaldırılan sayfaların eski adresleri kırılmasın
-  var MOVED = { '#/selman-vural': '#/hakkimizda' };
-
-  function resolve(hash) {
-    if (hash.indexOf('#/') === 0) {
-      var path = hash.split('?')[0].replace(/\/+$/, '');
-      if (has(MOVED, path)) { if (history.replaceState) history.replaceState(null, '', MOVED[path]); path = MOVED[path]; }
-      for (var n in ROUTES) if (has(ROUTES, n) && ROUTES[n].path === path) return { name: n, anchor: null };
-      return { name: 'ad', anchor: null };
-    }
+  // Sayfa içi çapa (#takvim, #iletisim …): bölüme kayar; klavye kullanıcısı için odak bölüm başlığına gider
+  function toAnchor(first) {
     var id = '';
-    try { id = hash.length > 1 ? decodeURIComponent(hash.slice(1)) : ''; } catch (e) { id = ''; }  // bozuk %-kodlu adres sayfayı kırmasın
-    var anchor = id ? document.getElementById(id) : null;
-    if (anchor) {
-      for (var v in views) if (has(views, v) && views[v].contains(anchor)) return { name: v, anchor: anchor };
-    }
-    return { name: 'home', anchor: null };
-  }
-
-  function route() {
-    var r = resolve(location.hash || '');
-    var name = views[r.name] ? r.name : 'home';
-    var first = current === null;
-    var changed = name !== current;
+    try { id = location.hash.length > 1 ? decodeURIComponent(location.hash.slice(1)) : ''; } catch (e) { id = ''; }  // bozuk %-kodlu adres sayfayı kırmasın
+    var target = id ? document.getElementById(id) : null;
     closeDropdowns(false);
-
-    if (changed) {
-      for (var key in views) if (has(views, key)) views[key].classList.toggle('is-active', key === name);
-      current = name;
-      setMeta(name);
-      each(routeLinks, function (a) {
-        if (a.getAttribute('data-route-link') === name) a.setAttribute('aria-current', 'page');
-        else a.removeAttribute('aria-current');
-      });
-      if (name !== 'home') clearSpy();
-      syncGroups();
-      if (!first && announcer) {
-        announcer.textContent = '';
-        setTimeout(function () { announcer.textContent = T('Sayfa') + ': ' + T(ROUTES[name].name); }, 60);
-      }
-    }
-
-    var target = r.anchor && r.anchor.id !== 'top' ? r.anchor : null;
-    if (target) {
-      setTimeout(function () {
-        target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
-        // Klavye kullanıcısı bölüme gelsin: bölüm başlığına odak
-        var h = target.matches('h1,h2,h3') ? target : $('h2, h3', target);
-        if (h && !first && !(modal && modal.open)) { if (!h.hasAttribute('tabindex')) h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
-      }, changed ? 40 : 0);
-    } else {
-      // Sayfa değişiminde başa anında dön (html'deki yumuşak kaydırmayı atla)
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-      // Yönlendirmeden sonra odak sayfa başlığına gider (ekran okuyucu ve klavye için)
-      if (!first && (changed || (r.anchor && r.anchor.id === 'top'))) {
-        var h1 = $('h1', views[name]);
-        if (h1) h1.focus({ preventScroll: true });
-      }
-    }
-    onScroll();
+    if (!target) return;
+    setTimeout(function () {
+      if (target.id === 'top') window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+      else target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+      if (first || (modal && modal.open)) return;
+      var h = target.id === 'top' ? pageH1 : target.matches('h1,h2,h3') ? target : $('h2, h3', target);
+      if (h) { if (!h.hasAttribute('tabindex')) h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+    }, first ? 40 : 0);
   }
 
   /* ------------------------------------------------------------------
@@ -586,7 +533,7 @@
     root.style.setProperty('--p', (max > 0 ? Math.min(1, Math.max(0, y / max)) : 0).toFixed(4));
     header.classList.toggle('scrolled', y > 8);
     toTop.classList.toggle('show', y > window.innerHeight * 0.6);
-    if (timeline && current === 'pilot' && !reduceMotion) {
+    if (timeline && !reduceMotion) {
       var rc = timeline.getBoundingClientRect();
       var mid = window.innerHeight * 0.6;
       timeline.style.setProperty('--tl', Math.min(1, Math.max(0, (mid - rc.top) / rc.height)).toFixed(4));
@@ -597,8 +544,7 @@
   window.addEventListener('resize', onScroll);
   toTop.addEventListener('click', function () {
     window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
-    var h1 = views[current] && $('h1', views[current]);
-    if (h1) h1.focus({ preventScroll: true });
+    if (pageH1) pageH1.focus({ preventScroll: true });
   });
 
   /* ------------------------------------------------------------------
@@ -631,7 +577,7 @@
     el.style.setProperty('--d', Math.min(idx, 4) * 90 + 'ms');
   });
 
-  window.addEventListener('hashchange', route);
+  window.addEventListener('hashchange', function () { toAnchor(false); });
 
   if (!('IntersectionObserver' in window) || reduceMotion) {
     each(revealItems, function (el) { el.classList.add('in'); });
@@ -657,7 +603,6 @@
 
   if ('IntersectionObserver' in window) {
     var spyObserver = new IntersectionObserver(function (entries) {
-      if (current !== 'home') return;
       each(entries, function (en) {
         if (!en.isIntersecting) return;
         clearSpy();
@@ -666,7 +611,7 @@
       });
       syncGroups();
     }, { rootMargin: '-45% 0px -50% 0px' });
-    each($$('section[id]', views.home), function (s) { spyObserver.observe(s); });
+    if (PAGE === 'home') each($$('main section[id]'), function (s) { spyObserver.observe(s); });
   }
 
   /* ------------------------------------------------------------------
@@ -675,9 +620,19 @@
      Türkçe metinler kaydedilir, sonra algılanan dil uygulanır.
      ------------------------------------------------------------------ */
   var langBtns = $$('[data-lang]');
+  // Site içi bağlantılar seçili dili taşır: İngilizcede /pilot → /pilot?lang=en
+  var siteLinks = [];
+  each($$('a[href^="/"]:not([href^="//"])'), function (a) { siteLinks.push({ a: a, href: a.getAttribute('href') }); });
+  function langLinks(lang) {
+    each(siteLinks, function (o) {
+      var i = o.href.indexOf('#'), path = i < 0 ? o.href : o.href.slice(0, i), hash = i < 0 ? '' : o.href.slice(i);
+      o.a.setAttribute('href', lang === 'en' ? path + '?lang=en' + hash : o.href);
+    });
+  }
   I18N.onChange(function (lang) {
     each(langBtns, function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-lang') === lang ? 'true' : 'false'); });
-    if (current) setMeta(current);
+    setMeta();
+    langLinks(lang);
     showCounts();
     if (form) form.elements.dil.value = lang;
   });
@@ -694,7 +649,8 @@
     });
   });
 
-  route();
+  syncGroups();
+  toAnchor(true);
   I18N.scan();
   I18N.apply();
   root.classList.remove('i18n-wait');

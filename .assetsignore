@@ -1,0 +1,8 @@
+# Cloudflare Workers statik asset yüklemesine girmeyecekler (site dosyası olmayanlar)
+_kaynak
+tonara-core
+files.zip
+logo-alternatives
+*.md
+.claude
+.htaccess

@@ -1,0 +1,91 @@
+  <section class="p-hero" aria-labelledby="h-pj">
+    <div class="wrap">
+      <nav class="crumb h-in" style="--i:0" aria-label="Sayfa yolu">
+        <ol><li><a href="/">Ana sayfa</a></li><li><a href="/hakkimizda">Hakkımızda</a></li><li aria-current="page">Projeler</li></ol>
+      </nav>
+      <p class="eyebrow h-in" style="--i:1">Projeler</p>
+      <h1 id="h-pj" class="h-in" style="--i:2" tabindex="-1">Projeler.</h1>
+      <p class="lead h-in" style="--i:3">Daha önce geliştirdiğimiz projeler. Hepsi aynı soruyla ilgili: veri nasıl korunur, kim neye erişir. Her projede problemi, ne yaptığımızı ve kanıtını düz anlattık; teknik ayrıntılar "Teknik ayrıntılar" başlığının altında.</p>
+    </div>
+  </section>
+
+  <section class="section alt" aria-labelledby="h-pj-axis">
+    <div class="wrap">
+      <article class="proj proj--lg reveal" aria-labelledby="h-pj-axis">
+        <div class="proj-top">
+          <h2 id="h-pj-axis">AXIS</h2>
+          <span class="rozet rozet--ok">Pilota hazır, belgelenmiş sınırlamalarla</span>
+        </div>
+        <p class="proj-sum">Uygulama ile PostgreSQL arasına oturan, her sorguya yazılı politikaya göre karar veren veritabanı güvenlik proxy'si.</p>
+        <dl class="pdl">
+          <div><dt>Problem</dt><dd>Uygulamalar veritabanına doğrudan bağlanır. Hatalı ya da kötü niyetli bir sorgu, veriyi okumaktan silmeye kadar her şeyi yapabilir.</dd></div>
+          <div><dt>Ne yaptık</dt><dd>Her sorguya izin veren, engelleyen ya da insan onayı isteyen bir proxy yazdık. Uygulamada kod değişikliği gerekmez.</dd></div>
+          <div><dt>Teknoloji</dt><dd><span class="chip">Rust</span><span class="chip">PostgreSQL wire protocol</span><span class="chip">Ed25519</span><span class="chip">mTLS</span></dd></div>
+          <div><dt>Kanıt</dt><dd>AXIS belgelerine göre PostgreSQL tarafında 800'ü aşkın test; Prisma ve Hibernate/JDBC ile uyum doğrulandı. Kaynak: <a href="https://docs.varuxcyber.com" target="_blank" rel="noopener noreferrer">docs.varuxcyber.com<span class="sr-only"> (yeni sekmede açılır)</span></a></dd></div>
+        </dl>
+        <details class="tech">
+          <summary>Teknik ayrıntılar</summary>
+          <ul>
+            <li>Hash zinciriyle bağlanmış, Ed25519 ile imzalı denetim kaydı (audit log).</li>
+            <li>Onay akışları: <code>REQUIRE_APPROVAL</code> kararı alan sorgu, yetkili bir kişi onaylayana kadar bekler.</li>
+            <li>İstemci tarafında ve upstream (veritabanı) tarafında mTLS.</li>
+            <li>ORM uyumu: uygulama kodunu değiştirmeden çalışır; Prisma ve Hibernate/JDBC ile doğrulandı.</li>
+            <li>PostgreSQL tarafında 800+ test (AXIS belgeleri).</li>
+            <li>MySQL desteği aktif geliştirmede: 280+ test (AXIS belgeleri).</li>
+          </ul>
+        </details>
+      </article>
+
+      <div class="proj-grid">
+        <article class="proj reveal" aria-labelledby="h-pj-cp">
+          <div class="proj-top"><h3 id="h-pj-cp">AXIS Control Plane</h3><span class="rozet">Uçtan uca test 26/26</span></div>
+          <dl class="pdl">
+            <div><dt>Problem</dt><dd>Bir proxy'nin kurallarını ve kayıtlarını komut satırından yönetmek zor.</dd></div>
+            <div><dt>Ne yaptık</dt><dd>AXIS için web paneli ve masaüstü uygulaması yazdık: veritabanı topoloji haritası, imzalı oturum.</dd></div>
+            <div><dt>Teknoloji</dt><dd><span class="chip">Next.js 15</span><span class="chip">React 19</span><span class="chip">Electron</span></dd></div>
+            <div><dt>Kanıt</dt><dd>Kendi uçtan uca test sonucumuz: 26/26.</dd></div>
+          </dl>
+        </article>
+        <article class="proj reveal" aria-labelledby="h-pj-vc">
+          <div class="proj-top"><h3 id="h-pj-vc">VARUX Control</h3><span class="rozet">Ekip yönetimi</span></div>
+          <dl class="pdl">
+            <div><dt>Problem</dt><dd>Küçük bir ekipte iş, yetki ve kod takibi dağınık kalıyor.</dd></div>
+            <div><dt>Ne yaptık</dt><dd>Rol bazlı yetkilendirme (RBAC), kilometre taşı (milestone) takibi ve GitHub entegrasyonu olan bir ekip yönetim uygulaması yazdık.</dd></div>
+            <div><dt>Teknoloji</dt><dd><span class="chip">Next.js</span><span class="chip">Prisma</span><span class="chip">PostgreSQL</span></dd></div>
+          </dl>
+        </article>
+        <article class="proj reveal" aria-labelledby="h-pj-va">
+          <div class="proj-top"><h3 id="h-pj-va">VARUX Analytics</h3><span class="rozet rozet--dev">AXIS'e henüz entegre değil</span></div>
+          <dl class="pdl">
+            <div><dt>Problem</dt><dd>Veritabanı kayıtlarında olağan dışı davranışı fark etmek ve kayıtlara soru sormak uzmanlık ister.</dd></div>
+            <div><dt>Ne yaptık</dt><dd>Büyük dil modeliyle (LLM) davranışsal anomali tespiti yapan ve kayıtlara doğal dille soru sorulabilen bir arayüz geliştirdik.</dd></div>
+            <div><dt>Teknoloji</dt><dd><span class="chip">LLM</span><span class="chip">Anomali tespiti</span></dd></div>
+          </dl>
+        </article>
+        <article class="proj reveal" aria-labelledby="h-pj-se">
+          <div class="proj-top"><h3 id="h-pj-se">SENTINEL</h3><span class="rozet">İlk proje</span></div>
+          <dl class="pdl">
+            <div><dt>Problem</dt><dd>Bir sistemin beklenen mantığından saptığını fark etmek.</dd></div>
+            <div><dt>Ne yaptık</dt><dd>Mantık sapmalarını ve anomalileri izleyen bir yazılım geliştirdik.</dd></div>
+          </dl>
+        </article>
+      </div>
+
+      <p class="proj-note reveal"><span class="rozet rozet--early">Erken aşama</span> <span><span data-brand-slot>Tonara</span>: üretim firmaları için kendi sunucusunda çalışan yapay zeka. Pilot prototipi aşamasında.</span></p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-cta-projeler">
+    <div class="wrap">
+      <div class="cta-band reveal">
+        <div>
+          <h2 id="h-cta-projeler">Aynı özeni verinize gösteririz.</h2>
+          <p>İlk görüşmede verinizin nerede duracağını ve kimin neye erişeceğini birlikte çiziyoruz.</p>
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary" href="/#iletisim">Tanışalım <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <a class="next-link reveal" href="/guvenlik"><span class="next-k">Sonraki sayfa</span><span class="next-t">Güvenliği nasıl sağlıyoruz</span><span aria-hidden="true">→</span></a>
+    </div>
+  </section>

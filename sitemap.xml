@@ -8,10 +8,52 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonara.tech/"/>
   </url>
   <url>
-    <loc>https://tonara.tech/?lang=en</loc>
+    <loc>https://tonara.tech/pilot</loc>
     <lastmod>2026-10-31</lastmod>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://tonara.tech/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tonara.tech/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonara.tech/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://tonara.tech/pilot"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonara.tech/pilot?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonara.tech/pilot"/>
+  </url>
+  <url>
+    <loc>https://tonara.tech/paketler</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://tonara.tech/paketler"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonara.tech/paketler?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonara.tech/paketler"/>
+  </url>
+  <url>
+    <loc>https://tonara.tech/senaryolar</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://tonara.tech/senaryolar"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonara.tech/senaryolar?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonara.tech/senaryolar"/>
+  </url>
+  <url>
+    <loc>https://tonara.tech/guvenlik</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://tonara.tech/guvenlik"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonara.tech/guvenlik?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonara.tech/guvenlik"/>
+  </url>
+  <url>
+    <loc>https://tonara.tech/muhakeme</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://tonara.tech/muhakeme"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonara.tech/muhakeme?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonara.tech/muhakeme"/>
+  </url>
+  <url>
+    <loc>https://tonara.tech/hakkimizda</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://tonara.tech/hakkimizda"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonara.tech/hakkimizda?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonara.tech/hakkimizda"/>
+  </url>
+  <url>
+    <loc>https://tonara.tech/projeler</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://tonara.tech/projeler"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonara.tech/projeler?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonara.tech/projeler"/>
   </url>
 </urlset>

@@ -1,10 +1,10 @@
 /* =====================================================================
    AYARLAR — siteyi yayına alırken yalnızca burayı doldurun.
-   Bu dosya <head> içinde, sayfa çizilmeden önce çalışır.
+   Bu dosya her sayfanın <head>'ine gömülür (_kaynak/build.py), sayfa çizilmeden önce çalışır.
    ===================================================================== */
 var BRAND              = 'Tonara';  // Marka adı (sayfa içindeki yerler buradan dolar)
 var EMAIL              = '';        // Örn. 'merhaba@alanadi.com.tr'  — boşsa "Doğrudan e-posta" satırı görünmez
-var SITE_URL           = 'https://tonara.tech';  // Canonical/hreflang etiketleri index.html <head> içinde bu adresle yazılı
+var SITE_URL           = 'https://tonara.tech';  // Canonical/hreflang etiketleri her sayfanın <head>'inde bu adresle yazılı (build.py)
 var DEMO_VIDEO         = '';        // Örn. 'demo.mp4'                — boşsa "Nasıl görünür" bölümü görünmez
 var FORM_ENDPOINT      = 'https://formspree.io/f/mqppyagr';  // İletişim formunun gideceği adres
 var RECAPTCHA_SITE_KEY = '';        // Google reCAPTCHA v2 (onay kutusu) site anahtarı — boşsa reCAPTCHA yüklenmez.
@@ -35,9 +35,29 @@ document.documentElement.classList.add('js');
   }
 })();
 
-/* İngilizce sürüm (?lang=en) kendi adresini canonical gösterir; Türkçe sürüm kök adresi */
+/* Eski tek sayfa adresleri (#/pilot, #takvim …) kırılmasın: ana sayfa açıldığında yeni adrese yönlenir.
+   Liste build.py tarafından doldurulur. */
+(function () {
+  if (document.documentElement.getAttribute('data-page') !== 'home') return;
+  var ROUTES = { '#/pilot': '/pilot', '#/paketler': '/paketler', '#/senaryolar': '/senaryolar', '#/guvenlik': '/guvenlik',
+    '#/muhakeme': '/muhakeme', '#/hakkimizda': '/hakkimizda', '#/projeler': '/projeler', '#/selman-vural': '/hakkimizda' };
+  var MOVED = {}/*@TASINAN_CAPALAR@*/;
+  function go() {
+    var h = location.hash || '', to = null;
+    if (h.indexOf('#/') === 0) {
+      var path = h.split('?')[0].replace(/\/+$/, '');
+      to = Object.prototype.hasOwnProperty.call(ROUTES, path) ? ROUTES[path] : '/404';
+    } else if (h.length > 1 && Object.prototype.hasOwnProperty.call(MOVED, h.slice(1))) {
+      to = '/' + MOVED[h.slice(1)] + h;
+    }
+    if (to) location.replace(to.replace(/(#|$)/, location.search + '$1'));
+  }
+  go();
+  window.addEventListener('hashchange', go);   // ana sayfa açıkken adres çubuğuna eski adres yazılırsa
+})();
+
+/* İngilizce sürüm (?lang=en) kendi adresini canonical gösterir; Türkçe sürüm sayfanın kendi adresini */
 document.addEventListener('DOMContentLoaded', function () {
   var link = document.querySelector('link[rel="canonical"]');
-  var base = (SITE_URL || '').trim().replace(/\/+$/, '');
-  if (link && base && /[?&]lang=en/i.test(location.search)) link.setAttribute('href', base + '/?lang=en');
+  if (link && /[?&]lang=en/i.test(location.search)) link.setAttribute('href', link.getAttribute('href') + '?lang=en');
 });

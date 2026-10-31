@@ -1,0 +1,88 @@
+  <section class="p-hero" aria-labelledby="h-mk">
+    <div class="wrap">
+      <nav class="crumb h-in" style="--i:0" aria-label="Sayfa yolu">
+        <ol><li><a href="/">Ana sayfa</a></li><li><a href="/guvenlik">Güvenlik</a></li><li aria-current="page">Sistem nasıl karar verir</li></ol>
+      </nav>
+      <p class="eyebrow h-in" style="--i:1">Karar</p>
+      <h1 id="h-mk" class="h-in" style="--i:2" tabindex="-1">Model öneri üretir, kod karar verir, insan onaylar.</h1>
+      <p class="lead h-in" style="--i:3">Açık lisanslı bir model kullanıyoruz ve onu eğitmiyoruz. Emeğimiz modelin etrafındaki düzende: belge arama, yazılı kurallar, kodla kontrol ve insan onayı.</p>
+    </div>
+  </section>
+
+  <section class="section alt" aria-labelledby="h-mk-yol">
+    <div class="wrap">
+      <p class="eyebrow reveal">İki yol</p>
+      <h2 id="h-mk-yol" class="reveal">Bir soru ve bir öneri sistemde nereden geçer?</h2>
+
+      <div data-tabs>
+        <div class="tabs" role="tablist" aria-label="Yol seçin" hidden>
+          <button type="button" role="tab" id="tab-soru" aria-controls="yol-soru" aria-selected="true">Bir soru</button>
+          <button type="button" role="tab" id="tab-oneri" aria-controls="yol-oneri" aria-selected="false" tabindex="-1">Bir sipariş önerisi</button>
+        </div>
+
+        <div id="yol-soru" role="tabpanel" aria-labelledby="tab-soru">
+          <h3 class="html-nojs-label">Bir soru</h3>
+          <p class="path-q"><span>Örnek soru</span>"Bu parçanın kalite talimatındaki ölçü toleransı neydi?"</p>
+          <ol class="flow">
+            <li><span class="who-acts">Kod</span><h3>Yetki</h3><p>Önce soranın kim olduğuna bakılır. Arama yalnızca bu kişinin görebileceği belgelerde yapılır.</p></li>
+            <li><span class="who-acts">Kod</span><h3>Arama</h3><p>Talimatlarda soruyla ilgili bölümler bulunur. Eski revizyon da çıkarsa cevap güncel revizyondan verilir ve bu not edilir.</p></li>
+            <li><span class="who-acts">Model</span><h3>Cevap</h3><p>Model cevabı yalnızca bulunan bölümlere dayanarak yazar. Bölümlerdeki talimat gibi görünen cümleler modele gitmeden çıkarılır.</p></li>
+            <li><span class="who-acts">Kod</span><h3>Kontrol</h3><p>Cevaptaki sayı (örnekte ±0,05 mm) ve ifadeler kaynakta geçiyor mu, bakılır. Geçmiyorsa cevap gösterilmez; sistem "bulamadım" der.</p></li>
+            <li><span class="who-acts">İnsan</span><h3>Kaynak</h3><p>Cevap; belge, revizyon ve maddeyle birlikte gösterilir. Parçanın kabul ya da red kararı çalışanda kalır.</p></li>
+          </ol>
+        </div>
+
+        <div id="yol-oneri" role="tabpanel" aria-labelledby="tab-oneri">
+          <h3 class="html-nojs-label">Bir sipariş önerisi</h3>
+          <p class="path-q"><span>Örnek durum</span>Üç tedarikçiden teklif geldi; hangisinden sipariş verilmeli?</p>
+          <ol class="flow">
+            <li><span class="who-acts">Model + kod</span><h3>Okuma</h3><p>Model tekliften yalnızca fiyat, teslim süresi gibi alanları çıkarır. Her değerin teklif metninde gerçekten geçtiği kodla kontrol edilir; geçmeyen değer atılır.</p></li>
+            <li><span class="who-acts">Kod + model</span><h3>Karşılaştırma</h3><p>Teklifleri kod karşılaştırır, model hesap yapmaz. Model sonucu okuyup gerekçeli bir öneri yazar. Kodun hesabıyla uyuşmayan öneri geçersiz sayılır.</p></li>
+            <li><span class="who-acts">Kod</span><h3>Kurallar</h3><p>Öneri yazılı kurallardan geçer: izin verilir, durdurulur ya da onaya gönderilir. Her kararın gerekçesi Türkçe yazılır. Mükerrer sipariş ve limiti aşmak için bölünmüş sipariş gibi durumlar kodla aranır.</p></li>
+            <li><span class="who-acts">İnsan</span><h3>Onay</h3><p>Sipariş her zaman onay ister. Kimin onaylayacağı tutara göre belirlenir; yüksek tutarda iki ayrı kişi gerekir.</p></li>
+            <li><span class="who-acts">Kod</span><h3>Kayıt</h3><p>Öneri, kural kararı ve onay imzalı kayda yazılır. Sonradan kimin neyi onayladığı görülebilir.</p></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-mk-ayar">
+    <div class="wrap">
+      <p class="eyebrow reveal">Pilotta nasıl ayarlıyoruz</p>
+      <h2 id="h-mk-ayar" class="reveal">Dört adım, her hafta tekrar.</h2>
+      <ol class="steps">
+        <li class="reveal"><span class="num" aria-hidden="true">01</span><h3>Karar biçiminizi toplarız</h3><p>Prosedürlerinizi ve geçmişte verilmiş örnek kararları toplarız: bu şirkette bu iş nasıl yapılıyor?</p></li>
+        <li class="reveal"><span class="num" aria-hidden="true">02</span><h3>Kuralları yazarız</h3><p>Limitleri, yasakları ve onay eşiklerini açık metin olarak yazarız. Kurallar imzalıdır; değişiklik ikinci bir yöneticinin onayını ister.</p></li>
+        <li class="reveal"><span class="num" aria-hidden="true">03</span><h3>Test seti hazırlarız</h3><p>Cevabı bilinen gerçek sorulardan bir test seti çıkarırız. Sistemi bu sorularla ölçeriz.</p></li>
+        <li class="reveal"><span class="num" aria-hidden="true">04</span><h3>Her hafta ölçer, düzeltiriz</h3><p>Test setini haftalık çalıştırır, çalışanların geri bildirimine bakar, belgeyi ya da kuralı düzeltiriz. Sonucu pilot raporunda görürsünüz.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section alt" aria-labelledby="h-mk-yok">
+    <div class="wrap">
+      <p class="eyebrow reveal">Yapmadıklarımız</p>
+      <h2 id="h-mk-yok" class="reveal">Üç şeyi yapmıyoruz.</h2>
+      <div class="cols">
+        <div class="reveal"><h3>Modeli eğitmiyoruz</h3><p>Bilgi modelin içinde değil, belgenizde durur. Bunun neden bir tercih olduğunu <a href="/#egitim">ana sayfada anlattık</a>.</p></div>
+        <div class="reveal"><h3>%100 doğruluk vaat etmiyoruz</h3><p>Yapay zeka hata yapabilir. Doğruluğu pilotta, cevabı bilinen sorularla ölçüp raporluyoruz.</p></div>
+        <div class="reveal"><h3>Önemli kararı insandan almıyoruz</h3><p>Sipariş, tedarikçiye yazı ve kalite kararı gibi adımlarda son söz her zaman bir çalışanınızda kalır.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-cta-muhakeme">
+    <div class="wrap">
+      <div class="cta-band reveal">
+        <div>
+          <h2 id="h-cta-muhakeme">Kendi işinizde nasıl karar verdiğini görün.</h2>
+          <p>Pilotta sizin belgelerinizle ve sizin kurallarınızla kurup her hafta birlikte ölçüyoruz.</p>
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary" href="/#iletisim">Tanışalım <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <a class="next-link reveal" href="/pilot"><span class="next-k">Sonraki sayfa</span><span class="next-t">8 haftalık pilot</span><span aria-hidden="true">→</span></a>
+    </div>
+  </section>

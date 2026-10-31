@@ -1,0 +1,65 @@
+<a class="skip" href="#icerik">Ana içeriğe geç</a>
+
+<!-- Logo işareti. Her yerde <use href="#mark"> ile kullanılır; renk currentColor. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="mark" viewBox="0 0 64 64">
+    <g fill="currentColor">
+      <path fill-rule="evenodd" d="M40 9 55 7.5 49.5 20Z M48.3 11.5a2.2 2.2 0 1 0 4.4 0a2.2 2.2 0 1 0 -4.4 0Z"/>
+      <path d="M43 17 47 18.5 38.5 41 34.5 39.5Z"/>
+      <path d="M37 37 19 37 2 41.5 19 43.5 37 42Z"/>
+      <g fill="none" stroke="currentColor" stroke-width="2.8" stroke-linejoin="miter" stroke-miterlimit="10">
+        <polyline points="43.5,23.5 55,34 52,22.5"/>
+        <polyline points="35,42 44,48 46,60"/>
+        <polyline points="33,42.5 29,50 32,60"/>
+        <polyline points="27,43 19,49 20,60"/>
+        <line x1="54" y1="8" x2="62" y2="2.5"/>
+      </g>
+    </g>
+    <circle cx="50.5" cy="11.5" r="2.2" fill="#A6814C"/>
+  </symbol>
+</svg>
+
+<div class="progress" aria-hidden="true"><span></span></div>
+
+
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="logo" href="{{LOGO_HREF}}"><svg class="logo-mark" aria-hidden="true" focusable="false"><use href="#mark"/></svg><span data-brand-slot>Tonara</span><span class="sr-only">, ana sayfa</span></a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu">Menü</button>
+    <nav id="menu" class="menu" aria-label="Ana menü">
+      <ul class="menu-list">
+        <li class="dd">
+          <button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-cozum">Çözüm</button>
+          <ul class="dd-panel" id="dd-cozum">
+            <li><a href="/#nasil-calisir">Nasıl çalışır</a></li>
+            <li><a href="/#egitim">Model neden eğitilmez</a></li>
+            <li><a href="/#moduller">Modüller</a></li>
+            <li><a href="/#baglantilar">Sistemlerinize bağlantı</a></li>
+            <li><a href="/senaryolar" data-nav="senaryolar">Senaryolar</a></li>
+          </ul>
+        </li>
+        <li class="dd">
+          <button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-guvenlik">Güvenlik</button>
+          <ul class="dd-panel" id="dd-guvenlik">
+            <li><a href="/guvenlik" data-nav="guvenlik">Güvenliği nasıl sağlıyoruz</a></li>
+            <li><a href="/muhakeme" data-nav="muhakeme">Sistem nasıl karar verir</a></li>
+          </ul>
+        </li>
+        <li><a href="/paketler" data-nav="paketler">Paketler</a></li>
+        <li><a href="/pilot" data-nav="pilot">Pilot</a></li>
+        <li class="dd">
+          <button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-biz">Biz</button>
+          <ul class="dd-panel" id="dd-biz">
+            <li><a href="/hakkimizda" data-nav="hakkimizda">Hakkımızda</a></li>
+            <li><a href="/projeler" data-nav="projeler">Projeler</a></li>
+          </ul>
+        </li>
+        <li><a class="menu-cta" href="/#iletisim">Tanışalım</a></li>
+      </ul>
+    </nav>
+    <div class="lang" role="group" aria-label="Dil / Language" data-i18n-skip>
+      <button type="button" data-lang="tr" lang="tr" aria-label="Türkçe" aria-pressed="true">TR</button>
+      <button type="button" data-lang="en" lang="en" aria-label="English" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
