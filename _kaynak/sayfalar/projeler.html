@@ -5,12 +5,37 @@
       </nav>
       <p class="eyebrow h-in" style="--i:1">Projeler</p>
       <h1 id="h-pj" class="h-in" style="--i:2" tabindex="-1">Projeler.</h1>
-      <p class="lead h-in" style="--i:3">Daha önce geliştirdiğimiz projeler. Hepsi aynı soruyla ilgili: veri nasıl korunur, kim neye erişir. Her projede problemi, ne yaptığımızı ve kanıtını düz anlattık; teknik ayrıntılar "Teknik ayrıntılar" başlığının altında.</p>
+      <p class="lead h-in" style="--i:3">VARUX çatısı altında geliştirilen ve geliştirilmekte olan projeler. Hepsi aynı soruyla ilgili: veri nasıl korunur, kim neye erişir. Önce hepsini tek tabloda, durumlarıyla gösteriyoruz; altında her projenin problemi, ne yaptığımız ve kanıtı var.</p>
     </div>
   </section>
 
-  <section class="section alt" aria-labelledby="h-pj-axis">
+  <section class="section alt" aria-labelledby="h-pj-kayit">
     <div class="wrap">
+      <p class="eyebrow reveal">Kayıt</p>
+      <h2 id="h-pj-kayit" class="reveal">Projeler ve durumları.</h2>
+      <div class="table-wrap reveal">
+        <table class="plans registry">
+          <caption class="sr-only">Projelerin alanı, durumu ve amacı</caption>
+          <thead>
+            <tr><th scope="col">Proje</th><th scope="col">Alan</th><th scope="col">Durum</th><th scope="col">Amaç</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row"><a href="#h-pj-axis">AXIS</a></th><td data-l="Alan">Veritabanı yazma yolu denetimi</td><td data-l="Durum"><span class="rozet rozet--ok">Çalışır, pilota hazır</span></td><td data-l="Amaç">Her sorguya yazılı kurala göre izin vermek, engellemek ya da onaya göndermek</td></tr>
+            <tr><th scope="row"><a href="#h-pj-cp">AXIS Control Plane</a></th><td data-l="Alan">AXIS yönetim arayüzü</td><td data-l="Durum"><span class="rozet rozet--ok">Çalışır</span></td><td data-l="Amaç">Kuralları ve kayıtları arayüzden yönetmek</td></tr>
+            <tr><th scope="row"><a href="#h-pj-ar">ARBITER</a></th><td data-l="Alan">Politika karar katmanı</td><td data-l="Durum"><span class="rozet rozet--dev">Geliştirme aşamasında</span></td><td data-l="Amaç">Hassas işlemlerde izin, engel ya da onay kararı vermek</td></tr>
+            <tr><th scope="row"><a href="#h-pj-vc">VARUX Control</a></th><td data-l="Alan">Ekip yönetimi</td><td data-l="Durum"><span class="rozet rozet--ok">Çalışır, iç kullanım</span></td><td data-l="Amaç">Rol bazlı yetki ve kilometre taşı takibi</td></tr>
+            <tr><th scope="row"><a href="#h-pj-va">VARUX Analytics</a></th><td data-l="Alan">Anomali tespiti</td><td data-l="Durum"><span class="rozet rozet--dev">AXIS'e entegre değil</span></td><td data-l="Amaç">Kayıtlarda olağan dışı davranışı tespit etmek</td></tr>
+            <tr><th scope="row"><a href="#h-pj-se">SENTINEL</a></th><td data-l="Alan">Sistem izleme</td><td data-l="Durum"><span class="rozet">Fikir aşaması</span></td><td data-l="Amaç">Mantık sapmalarını ve anormal davranışı tespit etmek</td></tr>
+            <tr><th scope="row"><a href="/">Tonara</a></th><td data-l="Alan">Üretim firmaları için yerel yapay zeka</td><td data-l="Durum"><span class="rozet rozet--early">Pilot prototipi</span></td><td data-l="Amaç">Bu sitedeki ürün</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-pj-kartlar">
+    <div class="wrap">
+      <h2 id="h-pj-kartlar" class="sr-only">Proje ayrıntıları</h2>
       <article class="proj proj--lg reveal" aria-labelledby="h-pj-axis">
         <div class="proj-top">
           <h2 id="h-pj-axis">AXIS</h2>
@@ -38,20 +63,28 @@
 
       <div class="proj-grid">
         <article class="proj reveal" aria-labelledby="h-pj-cp">
-          <div class="proj-top"><h3 id="h-pj-cp">AXIS Control Plane</h3><span class="rozet">Uçtan uca test 26/26</span></div>
+          <div class="proj-top"><h3 id="h-pj-cp">AXIS Control Plane</h3><span class="rozet rozet--ok">Çalışır</span></div>
           <dl class="pdl">
             <div><dt>Problem</dt><dd>Bir proxy'nin kurallarını ve kayıtlarını komut satırından yönetmek zor.</dd></div>
             <div><dt>Ne yaptık</dt><dd>AXIS için web paneli ve masaüstü uygulaması yazdık: veritabanı topoloji haritası, imzalı oturum.</dd></div>
             <div><dt>Teknoloji</dt><dd><span class="chip">Next.js 15</span><span class="chip">React 19</span><span class="chip">Electron</span></dd></div>
-            <div><dt>Kanıt</dt><dd>Kendi uçtan uca test sonucumuz: 26/26.</dd></div>
+            <div><dt>Kanıt</dt><dd>Uçtan uca test: 26/26. Kaynak: kendi test çalıştırmamız.</dd></div>
+          </dl>
+        </article>
+        <article class="proj reveal" aria-labelledby="h-pj-ar">
+          <div class="proj-top"><h3 id="h-pj-ar">ARBITER</h3><span class="rozet rozet--dev">Geliştirme aşamasında</span></div>
+          <dl class="pdl">
+            <div><dt>Amaç</dt><dd>Hassas işlemlerde izin, engel ya da onay kararı veren bir politika karar katmanı.</dd></div>
+            <div><dt>Kanıt</dt><dd>Geliştirme sürüyor; henüz paylaşılan bir test sonucu yok.</dd></div>
           </dl>
         </article>
         <article class="proj reveal" aria-labelledby="h-pj-vc">
-          <div class="proj-top"><h3 id="h-pj-vc">VARUX Control</h3><span class="rozet">Ekip yönetimi</span></div>
+          <div class="proj-top"><h3 id="h-pj-vc">VARUX Control</h3><span class="rozet rozet--ok">Çalışır, iç kullanım</span></div>
           <dl class="pdl">
             <div><dt>Problem</dt><dd>Küçük bir ekipte iş, yetki ve kod takibi dağınık kalıyor.</dd></div>
             <div><dt>Ne yaptık</dt><dd>Rol bazlı yetkilendirme (RBAC), kilometre taşı (milestone) takibi ve GitHub entegrasyonu olan bir ekip yönetim uygulaması yazdık.</dd></div>
             <div><dt>Teknoloji</dt><dd><span class="chip">Next.js</span><span class="chip">Prisma</span><span class="chip">PostgreSQL</span></dd></div>
+            <div><dt>Kanıt</dt><dd>Bu sayfada paylaşılan bir ölçüm yok.</dd></div>
           </dl>
         </article>
         <article class="proj reveal" aria-labelledby="h-pj-va">
@@ -60,13 +93,14 @@
             <div><dt>Problem</dt><dd>Veritabanı kayıtlarında olağan dışı davranışı fark etmek ve kayıtlara soru sormak uzmanlık ister.</dd></div>
             <div><dt>Ne yaptık</dt><dd>Büyük dil modeliyle (LLM) davranışsal anomali tespiti yapan ve kayıtlara doğal dille soru sorulabilen bir arayüz geliştirdik.</dd></div>
             <div><dt>Teknoloji</dt><dd><span class="chip">LLM</span><span class="chip">Anomali tespiti</span></dd></div>
+            <div><dt>Kanıt</dt><dd>Bu sayfada paylaşılan bir ölçüm yok.</dd></div>
           </dl>
         </article>
         <article class="proj reveal" aria-labelledby="h-pj-se">
-          <div class="proj-top"><h3 id="h-pj-se">SENTINEL</h3><span class="rozet">İlk proje</span></div>
+          <div class="proj-top"><h3 id="h-pj-se">SENTINEL</h3><span class="rozet">Fikir aşaması</span></div>
           <dl class="pdl">
             <div><dt>Problem</dt><dd>Bir sistemin beklenen mantığından saptığını fark etmek.</dd></div>
-            <div><dt>Ne yaptık</dt><dd>Mantık sapmalarını ve anomalileri izleyen bir yazılım geliştirdik.</dd></div>
+            <div><dt>Durum</dt><dd>Henüz geliştirilmedi.</dd></div>
           </dl>
         </article>
       </div>
@@ -75,7 +109,7 @@
     </div>
   </section>
 
-  <section class="section" aria-labelledby="h-cta-projeler">
+  <section class="section alt" aria-labelledby="h-cta-projeler">
     <div class="wrap">
       <div class="cta-band reveal">
         <div>

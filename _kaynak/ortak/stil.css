@@ -104,6 +104,9 @@ p { margin: 0 0 1em; }
 .lead { font-size: clamp(1.08rem, 1.7vw, 1.22rem); color: var(--muted); max-width: 36em; margin: 26px 0 34px; }
 .body-lg { font-size: 1.1rem; color: var(--muted); max-width: 40em; }
 .small-note { margin: 28px 0 0; color: var(--muted); font-size: .95rem; max-width: 46em; }
+.price-factors { margin: 40px 0 0; max-width: 46em; }
+.price-factors h3 { margin-bottom: 8px; }
+.price-factors p { color: var(--muted); }
 .prose p { color: var(--muted); font-size: 1.08rem; }
 .prose p strong { color: var(--ink); font-weight: 600; }
 
@@ -182,6 +185,35 @@ p { margin: 0 0 1em; }
 .deal-actions .b1 { background: var(--accent); color: var(--on-accent); }
 .deal-actions .b2 { color: var(--accent); }
 .deal-actions em { margin-left: auto; font-style: normal; font-size: .76rem; color: var(--muted); }
+/* Ana sayfa örnek ekranı: tıklanabilir onay akışı ve hazır sorular (yalnızca sayfa içinde, sunucuya istek yok) */
+.deal button.b { font: inherit; font-size: .8rem; cursor: pointer; }
+.deal button.b:hover:not(:disabled) { background: var(--accent-dark); border-color: var(--accent-dark); color: var(--on-accent); }
+.deal button.b:disabled { cursor: default; opacity: .75; }
+.deal-view { animation: fadeUp .3s var(--ease); }
+.deal-q { margin: 0 0 10px; font-weight: 600; font-size: .86rem; }
+.deal-reasons { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.deal-reasons .b { background: var(--card); text-align: left; }
+.deal-link { font: inherit; font-size: .78rem; margin-top: 12px; padding: 2px 0; background: none; border: 0; border-bottom: 1px solid var(--brass); color: var(--accent); cursor: pointer; }
+.deal-status { display: flex; align-items: center; gap: 8px; margin: 0 0 6px; font-weight: 600; font-size: .9rem; }
+.deal-dot { width: 8px; height: 8px; border-radius: 50%; background: #3E7D5A; flex: none; }
+.deal-status.is-no .deal-dot { background: var(--warn); }
+.deal-sum { margin: 0 0 10px; color: var(--muted); font-size: .8rem; }
+.deal-log { margin: 0; border-top: 1px solid var(--line); font-size: .76rem; }
+.deal-log div { display: grid; grid-template-columns: 78px 1fr; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--line); }
+.deal-log dt { color: var(--muted); }
+.deal-log dd { margin: 0; }
+.deal-log code { font-size: .74rem; background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
+.deal-hash-n { display: block; margin-top: 3px; color: var(--muted); font-size: .7rem; line-height: 1.4; }
+.deal-note { margin: 10px 0 0; font-size: .72rem; color: var(--muted); line-height: 1.45; }
+.app-qs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 20px 16px; }
+.app-qs-k { width: 100%; font-size: .74rem; color: var(--muted); }
+/* Geniş ekranda satın alma kartı asistanın sağ altına biner: sorular kartın altında kalmasın */
+@media (min-width: 961px) { .app-qs { margin-right: 40%; } .app-qs button { text-align: left; } }
+.app-qs button { font: inherit; font-size: .78rem; padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); cursor: pointer; }
+.app-qs button:hover { border-color: var(--accent); }
+.app-qs button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent); color: var(--on-accent); }
+.src.is-none svg { color: var(--warn); }
+.msg-a.is-new p, .msg-q.is-new p, .msg-a.is-new .src { animation: fadeUp .3s var(--ease); }
 .stage-note { margin: 12px 0 0; font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 /* Bir kez oynayan açılış: yalnızca JS bu sınıfı eklerse gizli başlar */
 .stage.anim [data-step] { opacity: 0; transform: translateY(8px); transition: opacity .45s var(--ease), transform .45s var(--ease); }
@@ -225,6 +257,7 @@ p { margin: 0 0 1em; }
 .note-box p { margin: 0 0 .5em; }
 .note-box p:last-child { margin: 0; }
 .note-box strong { font-weight: 600; }
+.note-box h3 { font-size: 1.15rem; margin: 0 0 .4em; }
 
 /* ---------- Ana sayfa: eğitim / bağlantılar / teaser ---------- */
 .choice { display: grid; grid-template-columns: 1fr 1.5fr; gap: 56px; align-items: start; }
@@ -267,6 +300,9 @@ p { margin: 0 0 1em; }
 .plans thead th { font-size: .76rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 500; background: var(--bg); }
 .plans tbody th { font-family: var(--serif); font-weight: 400; font-size: 1.12rem; color: var(--accent); }
 .plans tbody tr:last-child th, .plans tbody tr:last-child td { border-bottom: 0; }
+.registry tbody th a { color: inherit; text-decoration: none; }
+.registry tbody th a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.registry .rozet { white-space: nowrap; }
 .risk th[scope="row"] { width: 20%; }
 
 /* ---------- SSS ---------- */
@@ -367,6 +403,17 @@ p { margin: 0 0 1em; }
 .sc.is-player .sc-steps li.now { animation: fadeUp .35s var(--ease); }
 .sc-ctl { display: flex; align-items: center; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
 .sc-count { font-size: .88rem; color: var(--muted); margin-left: 6px; }
+.sc-group { display: grid; gap: 28px; }
+.sc-group + .sc-group { margin-top: 20px; }
+.sc-group-h { margin: 0; font-size: 1.15rem; letter-spacing: .1em; text-transform: uppercase; font-family: var(--sans); font-weight: 500; color: var(--muted); }
+.sc.is-player .sc-pick { display: block; margin-bottom: 26px; }
+.sc-pick-h { margin: 14px 0 8px; font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--brass-ink); }
+.sc-pick-h:first-child { margin-top: 0; }
+.sc-pick-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.sc.is-player .sc-group { display: block; }
+.sc.is-player .sc-group + .sc-group { margin-top: 0; }
+.sc.is-player .sc-group:not(.on) { display: none; }
+.sc.is-player .sc-group-h { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* ---------- Güvenlik ---------- */
 .layers-fig { margin: 0 0 40px; padding: 24px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow-sm); }

@@ -105,6 +105,7 @@
      ------------------------------------------------------------------ */
   var stage = $('[data-stage]');
   var typed = stage && $('[data-typed]', stage);
+  var heroTyping = { stop: function () {} };   // hazır soru seçilince yazma animasyonu durur
   if (stage && typed && !reduceMotion) {
     var typedSrc = typed.textContent;                         // Türkçe asıl; dil o an neyse ona çevrilir
     var ghost = document.createElement('span');
@@ -130,10 +131,139 @@
     }, 900);
     // Dil değişince yazma animasyonu bitmiş haliyle yeni dile geçer
     I18N.onChange(function () {
+      if (heroTyping.done) return;
       if (typeTimer) { clearInterval(typeTimer); typeTimer = null; }
       ghost.textContent = T(typedSrc);
       if (live.textContent) live.textContent = T(typedSrc);
     });
+    heroTyping.stop = function () {
+      heroTyping.done = true;
+      if (typeTimer) { clearInterval(typeTimer); typeTimer = null; }
+      each(steps, function (el) { el.classList.add('on'); });
+    };
+  }
+
+  /* ------------------------------------------------------------------
+     ÖRNEK EKRAN (ana sayfa) — tamamen sayfa içinde, sunucuya istek gitmez.
+     Asistan: yalnızca hazır sorular (serbest metin yok). Satın alma kartı:
+     Onayla / Reddet gerçekten çalışır; sonuç bir kayıt satırıyla gösterilir.
+     ------------------------------------------------------------------ */
+  var ask = stage && $('[data-ask]', stage);
+  if (ask) {
+    var ASK = {
+      tol: { q: 'Bu parçanın kalite talimatındaki ölçü toleransı neydi?', a: 'Talimata göre tolerans ±0,05 mm; ölçüm her vardiya başında yapılır.', src: 'Kaynak: Kalite talimatı · Rev. 3 · Madde 4.2' },
+      isi: { q: 'Kalıp ön ısıtmasına ne zaman başlanır?', a: 'Kalıp değişim talimatına göre ön ısıtmaya, değişimden 30 dakika önce başlanır.', src: 'Kaynak: Kalıp değişim talimatı · Rev. 2 · Madde 3.1' },
+      plan: { q: 'Gelecek ayın vardiya planı ne?', a: 'Bu konuda belge bulamadım. Vardiya planı için üretim planlama birimine sormanızı öneririm.', src: 'Kaynak yok: cevap tahmin edilmedi', none: true }
+    };
+    var askQ = $('[data-ask-q]', ask), askA = $('[data-ask-a]', ask), askSrc = $('[data-ask-src]', ask);
+    var askSrcT = $('[data-ask-src-t]', ask), askLive = $('[data-ask-live]', ask), askQs = $('[data-ask-qs]', ask);
+    var askBtns = $$('[data-q]', askQs), askCur = null;
+    $('[data-ask-input]', ask).hidden = true;
+    askQs.hidden = false;
+    var askRender = function (announce) {
+      if (!askCur) return;
+      var o = ASK[askCur];
+      askQ.textContent = T(o.q);
+      askA.textContent = T(o.a);
+      askA.setAttribute('data-i18n-skip', '');
+      askSrcT.textContent = T(o.src);
+      askSrc.classList.toggle('is-none', !!o.none);
+      each(askBtns, function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-q') === askCur ? 'true' : 'false'); });
+      if (announce) {
+        askLive.textContent = '';
+        setTimeout(function () { askLive.textContent = T('Asistan') + ': ' + T(o.a) + ' ' + T(o.src); }, 60);
+      }
+    };
+    each(askBtns, function (b) {
+      b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', function () {
+        heroTyping.stop();
+        askCur = b.getAttribute('data-q');
+        each($$('.msg', ask), function (m) { m.classList.remove('is-new'); void m.offsetWidth; m.classList.add('is-new'); });
+        askRender(true);
+      });
+    });
+    I18N.onChange(function () { askRender(false); });
+  }
+
+  var deal = stage && $('[data-deal]', stage);
+  if (deal) {
+    var dealViews = {};
+    each($$('[data-deal-view]', deal), function (v) { dealViews[v.getAttribute('data-deal-view')] = v; });
+    var dealLive = $('[data-deal-live]', deal);
+    var dealState = null;            // { approved: bool, reason: Türkçe gerekçe, at: Date, hash: '…' }
+    var dealPrev = '0000000000000000000000000000000000000000000000000000000000000000';
+    var APPROVE_REASON = 'Önerilen teklif: en düşük fiyat ve en kısa teslim';
+
+    // Kayıt özeti: SHA-256 (tarayıcı destekliyorsa), önceki kaydın özetiyle zincirli
+    var sha256 = function (text, done) {
+      var c = window.crypto && window.crypto.subtle;
+      if (c && window.TextEncoder) {
+        c.digest('SHA-256', new TextEncoder().encode(text)).then(function (buf) {
+          done(Array.prototype.map.call(new Uint8Array(buf), function (x) { return ('0' + x.toString(16)).slice(-2); }).join(''));
+        }, function () { done(''); });
+      } else { done(''); }
+    };
+    var fitStage = function () {
+      // Kart sahnenin dışına taşmasın (masaüstünde kart asistanın üstüne binen konumda)
+      stage.style.paddingBottom = '';
+      if (window.getComputedStyle(deal).position !== 'absolute') return;
+      var over = deal.offsetTop + deal.offsetHeight - ask.offsetHeight;
+      if (over > 0) stage.style.paddingBottom = (over + 8) + 'px';
+    };
+    var show = function (name, focusSel) {
+      for (var k in dealViews) if (has(dealViews, k)) dealViews[k].hidden = k !== name;
+      fitStage();
+      var f = focusSel && $(focusSel, dealViews[name]);
+      if (f) f.focus();
+    };
+    var dealRender = function () {
+      if (!dealState) return;
+      var v = dealViews.done, ok = dealState.approved;
+      var status = $('.deal-status', v);
+      status.classList.toggle('is-no', !ok);
+      $('[data-deal-status]', v).textContent = ok ? T('Sipariş taslağı hazırlandı') : T('Reddedildi · satın almacıya iade edildi');
+      $('[data-deal-sum]', v).textContent = ok
+        ? T('Tedarikçi B · birim fiyat 398,50 TL · teslim 9 gün')
+        : T('Sistem yeni öneri üretmez; karar satın almacıya geri döndü.');
+      $('[data-deal-date]', v).textContent = dealState.at.toLocaleString(I18N.lang() === 'en' ? 'en-GB' : 'tr-TR', { dateStyle: 'medium', timeStyle: 'short' });
+      $('[data-deal-decision]', v).textContent = ok ? T('Onaylandı') : T('Reddedildi');
+      $('[data-deal-reason]', v).textContent = T(dealState.reason);
+      $('[data-deal-hash]', v).textContent = dealState.hash ? dealState.hash.slice(0, 10) + '…' + dealState.hash.slice(-6) : '—';
+      each($$('[data-deal-date], [data-deal-status], [data-deal-sum], [data-deal-decision], [data-deal-reason], [data-deal-hash]', v), function (el) { el.setAttribute('data-i18n-skip', ''); });
+      fitStage();
+    };
+    var decide = function (approved, reason) {
+      dealState = { approved: approved, reason: reason, at: new Date(), hash: '' };
+      var row = [dealPrev, dealState.at.toISOString(), 'Demo kullanıcı', approved ? 'onay' : 'ret', reason, 'Tedarikçi B'].join('|');
+      dealRender();
+      show('done', '.deal-status');
+      dealLive.textContent = '';
+      setTimeout(function () {
+        dealLive.textContent = (approved ? T('Sipariş taslağı hazırlandı') : T('Reddedildi · satın almacıya iade edildi')) + '. ' + T('Bu bir örnek ekrandır; gerçek bir sipariş oluşturulmaz, e-posta gönderilmez.');
+      }, 60);
+      sha256(row, function (h) {
+        if (!dealState) return;
+        dealState.hash = h;
+        if (h) dealPrev = h;
+        dealRender();
+      });
+    };
+    each($$('[data-deal-do]', deal), function (b) {
+      b.disabled = false;
+      b.addEventListener('click', function () {
+        var act = b.getAttribute('data-deal-do');
+        if (act === 'approve') decide(true, APPROVE_REASON);
+        else if (act === 'reject') { show('reason', '.deal-q'); dealLive.textContent = T('Neden reddediyorsunuz?'); }
+        else if (act === 'back') show('ask', '[data-deal-do="reject"]');
+        else if (act === 'reset') { dealState = null; show('ask', '[data-deal-do="approve"]'); dealLive.textContent = T('Örnek ekran ilk haline döndü.'); }
+      });
+    });
+    each($$('[data-reason]', deal), function (b) {
+      b.addEventListener('click', function () { decide(false, b.getAttribute('data-reason')); });
+    });
+    window.addEventListener('resize', fitStage);
+    I18N.onChange(function () { dealRender(); });
   }
 
   /* ------------------------------------------------------------------
@@ -157,11 +287,14 @@
     var scNext = $('[data-sc-next]', scCtl);
     var scCount = $('.sc-count', scCtl);
 
+    var scBtns = [];
     var scRender = function () {
       each(scItems, function (it, a) {
         it.classList.toggle('on', a === scCur);
-        scPick.children[a].setAttribute('aria-pressed', a === scCur ? 'true' : 'false');
+        scBtns[a].setAttribute('aria-pressed', a === scCur ? 'true' : 'false');
       });
+      // Grup başlığı: yalnızca açık senaryonun grubu ekran okuyucuya kalır (görsel başlık seçicide)
+      each($$('.sc-group', player), function (g) { g.classList.toggle('on', g.contains(scItems[scCur])); });
       var lis = $$('.sc-steps li', scItems[scCur]);
       each(lis, function (li, b) {
         li.classList.toggle('off', b > scStep);
@@ -172,7 +305,25 @@
       scItems[scCur].appendChild(scCtl);
     };
 
+    // Seçici: senaryolar grup başlıklarıyla (.sc-group-h) birlikte; grup yoksa tek düz liste
+    var scRow = null, scGroup = null;
     each(scItems, function (it, i) {
+      var g = it.closest('.sc-group');
+      if (!scRow || g !== scGroup) {
+        scGroup = g;
+        var gh = g && $('.sc-group-h', g);
+        if (gh) {
+          var lbl = document.createElement('p');
+          lbl.className = 'sc-pick-h';
+          lbl.setAttribute('aria-hidden', 'true');
+          lbl.textContent = gh.textContent;
+          scPick.appendChild(lbl);
+        }
+        scRow = document.createElement('div');
+        scRow.className = 'sc-pick-row';
+        if (gh) { scRow.setAttribute('role', 'group'); scRow.setAttribute('aria-label', gh.textContent); }
+        scPick.appendChild(scRow);
+      }
       var btn = document.createElement('button');
       btn.type = 'button';
       var num = document.createElement('b');
@@ -181,7 +332,8 @@
       btn.appendChild(num);
       btn.appendChild(document.createTextNode($('h3', it).textContent.replace(/^\s*\d+/, '')));
       btn.addEventListener('click', function () { scCur = i; scStep = 0; scRender(); });
-      scPick.appendChild(btn);
+      scRow.appendChild(btn);
+      scBtns.push(btn);
     });
     player.insertBefore(scPick, player.firstChild);
     player.classList.add('is-player');
@@ -189,7 +341,7 @@
       scStep++; scRender();
       if (scNext.disabled) $('[data-sc-reset]', scCtl).focus();
     });
-    $('[data-sc-all]', scCtl).addEventListener('click', function () { scStep = 3; scRender(); });
+    $('[data-sc-all]', scCtl).addEventListener('click', function () { scStep = $$('.sc-steps li', scItems[scCur]).length - 1; scRender(); });
     $('[data-sc-reset]', scCtl).addEventListener('click', function () { scStep = 0; scRender(); scNext.focus(); });
     scRender();
     I18N.onChange(scRender);

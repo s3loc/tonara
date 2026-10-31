@@ -13,44 +13,80 @@
       </div>
 
       <figure class="stage" data-stage>
-        <div class="app" aria-hidden="true">
+        <div class="app" role="region" aria-label="Örnek şirket asistanı ekranı" data-ask>
           <div class="app-bar">
-            <svg><use href="#mark"/></svg>
+            <svg aria-hidden="true" focusable="false"><use href="#mark"/></svg>
             <span class="app-title">Şirket asistanı</span>
-            <span class="app-status"><i></i>Şirket sunucusu</span>
+            <span class="app-status"><i aria-hidden="true"></i>Şirket sunucusu</span>
           </div>
           <div class="app-body">
             <div class="msg msg-q" data-step>
               <span class="who">Siz</span>
-              <p>Bu parçanın kalite talimatındaki ölçü toleransı neydi?</p>
+              <p data-ask-q>Bu parçanın kalite talimatındaki ölçü toleransı neydi?</p>
             </div>
             <div class="msg msg-a">
-              <span class="who" data-step><svg><use href="#mark"/></svg>Asistan</span>
-              <p class="typed" data-typed>Talimata göre tolerans ±0,05 mm; ölçüm her vardiya başında yapılır.</p>
-              <span class="src" data-step><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3 M6 8h4.5 M6 10.5h4.5"/></svg>Kaynak: Kalite talimatı · Rev. 3 · Madde 4.2</span>
+              <span class="who" data-step><svg aria-hidden="true" focusable="false"><use href="#mark"/></svg>Asistan</span>
+              <p class="typed" data-typed data-ask-a>Talimata göre tolerans ±0,05 mm; ölçüm her vardiya başında yapılır.</p>
+              <span class="src" data-step data-ask-src><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true" focusable="false"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3 M6 8h4.5 M6 10.5h4.5"/></svg><span data-ask-src-t>Kaynak: Kalite talimatı · Rev. 3 · Madde 4.2</span></span>
             </div>
           </div>
-          <div class="app-input"><span>Bir soru yazın…</span><b>Enter</b></div>
+          <div class="app-input" data-ask-input><span>Bir soru yazın…</span><b>Enter</b></div>
+          <div class="app-qs" data-ask-qs hidden>
+            <span class="app-qs-k">Hazır sorulardan birini seçin:</span>
+            <button type="button" data-q="tol">Ölçü toleransı neydi?</button>
+            <button type="button" data-q="isi">Kalıp ön ısıtmasına ne zaman başlanır?</button>
+            <button type="button" data-q="plan">Gelecek ayın vardiya planı ne?</button>
+          </div>
+          <p class="sr-only" aria-live="polite" data-ask-live></p>
           <div class="app-foot">
             <span>Çalıştığı yer: <b>şirket sunucusu</b></span>
             <span>Dış bağlantı: <b>yok</b></span>
           </div>
         </div>
 
-        <div class="deal" aria-hidden="true" data-step>
+        <div class="deal" data-step data-deal role="region" aria-label="Örnek satın alma onay ekranı">
           <div class="deal-head"><b>Satın alma</b> · Teklif karşılaştırma</div>
-          <table>
-            <thead><tr><th>Tedarikçi</th><th>Birim fiyat</th><th>Teslim</th></tr></thead>
-            <tbody>
-              <tr><td>Tedarikçi A</td><td>412,00 TL</td><td>12 gün</td></tr>
-              <tr class="pick"><td>Tedarikçi B<span class="tag">öneri</span></td><td>398,50 TL</td><td>9 gün</td></tr>
-              <tr><td>Tedarikçi C</td><td>405,00 TL</td><td>18 gün</td></tr>
-            </tbody>
-          </table>
-          <div class="deal-actions"><span class="b b1">Onayla</span><span class="b b2">Reddet</span><em>Karar sizde.</em></div>
+
+          <div class="deal-view" data-deal-view="ask">
+            <table>
+              <caption class="sr-only">Üç tedarikçinin teklifi; Tedarikçi B öneriliyor</caption>
+              <thead><tr><th scope="col">Tedarikçi</th><th scope="col">Birim fiyat</th><th scope="col">Teslim</th></tr></thead>
+              <tbody>
+                <tr><td>Tedarikçi A</td><td>412,00 TL</td><td>12 gün</td></tr>
+                <tr class="pick"><td>Tedarikçi B<span class="tag">öneri</span></td><td>398,50 TL</td><td>9 gün</td></tr>
+                <tr><td>Tedarikçi C</td><td>405,00 TL</td><td>18 gün</td></tr>
+              </tbody>
+            </table>
+            <div class="deal-actions"><button type="button" class="b b1" data-deal-do="approve" disabled>Onayla</button><button type="button" class="b b2" data-deal-do="reject" disabled>Reddet</button><em>Karar sizde.</em></div>
+          </div>
+
+          <div class="deal-view" data-deal-view="reason" hidden>
+            <p class="deal-q" tabindex="-1">Neden reddediyorsunuz?</p>
+            <div class="deal-reasons" role="group" aria-label="Reddetme gerekçesi">
+              <button type="button" class="b b2" data-reason="Fiyat yüksek">Fiyat yüksek</button>
+              <button type="button" class="b b2" data-reason="Teslim süresi uygun değil">Teslim süresi uygun değil</button>
+              <button type="button" class="b b2" data-reason="Tedarikçi uygun değil">Tedarikçi uygun değil</button>
+            </div>
+            <button type="button" class="deal-link" data-deal-do="back">Vazgeç</button>
+          </div>
+
+          <div class="deal-view" data-deal-view="done" hidden>
+            <p class="deal-status" tabindex="-1"><span class="deal-dot" aria-hidden="true"></span><span data-deal-status></span></p>
+            <p class="deal-sum" data-deal-sum></p>
+            <dl class="deal-log">
+              <div><dt>Tarih</dt><dd data-deal-date></dd></div>
+              <div><dt>Onaylayan</dt><dd>Demo kullanıcı</dd></div>
+              <div><dt>Karar</dt><dd data-deal-decision></dd></div>
+              <div><dt>Gerekçe</dt><dd data-deal-reason></dd></div>
+              <div class="deal-hash"><dt>Kayıt özeti</dt><dd><code data-deal-hash></code><span class="deal-hash-n">Gerçek sistemde kayıt imzalanır ve bir önceki kayda zincirlenir.</span></dd></div>
+            </dl>
+            <p class="deal-note">Bu bir örnek ekrandır; gerçek bir sipariş oluşturulmaz, e-posta gönderilmez.</p>
+            <button type="button" class="deal-link" data-deal-do="reset">Baştan al</button>
+          </div>
+          <p class="sr-only" aria-live="polite" data-deal-live></p>
         </div>
 
-        <figcaption class="stage-note"><span aria-hidden="true">Örnek ekran · rakamlar kurgusal</span><span class="sr-only">Örnek ekran, rakamlar kurgusaldır: Şirket asistanı, bir parçanın ölçü toleransını soran çalışana cevabı kalite talimatının 4.2 maddesini kaynak göstererek veriyor. Yanında üç tedarikçinin teklifini karşılaştıran bir satın alma kartı, onay ya da ret için çalışanın kararını bekliyor.</span></figcaption>
+        <figcaption class="stage-note"><span aria-hidden="true">Örnek ekran · rakamlar kurgusal</span><span class="sr-only">Örnek ekran, rakamlar kurgusaldır: Şirket asistanı, bir parçanın ölçü toleransını soran çalışana cevabı kalite talimatının 4.2 maddesini kaynak göstererek veriyor; hazır sorulardan birini seçerek başka bir cevap görebilirsiniz. Yanında üç tedarikçinin teklifini karşılaştıran bir satın alma kartı var; onaylayarak ya da reddederek onay akışını deneyebilirsiniz.</span></figcaption>
       </figure>
     </div>
 

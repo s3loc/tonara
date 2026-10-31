@@ -100,3 +100,68 @@ Hepsi tarayıcıda tek tek denendi.
 4. **JSON-LD logosu** `logo-full.svg` dosyasını gösteriyor. Sayfalar bu dosyayı yüklemiyor, yalnızca arama motoru için duruyor. Google logo için PNG'yi daha güvenilir okuyor; 512×512 bir PNG eklemek ister misiniz?
 5. **Sayfa boyutu.** Her sayfa yaklaşık 175–200 KB. Bunun ~76 KB'ı her sayfaya gömülen İngilizce sözlük. İstenen "tek başına çalışma" kuralının bedeli bu. Sıkıştırmayla aktarılan boyut çok daha küçük olur.
 6. **`DEGISIKLIK_OZETI.md`** hâlâ "tek dosya, hash adresleri" diye anlatıyor. O dosyaya dokunmadım.
+
+---
+
+# İkinci tur (2026-10-31): senaryolar, fiyat, projeler, hakkımızda, örnek ekran
+
+Her yetenek iddiası `tonara-core` kaynak koduna (`policy.py`, `procurement.py`, `api.py`, `config/policy.yaml`) ve `docs/LIMITLER.md`, `DECISIONS.md` belgelerine karşı kontrol edildi.
+
+## Değişen dosyalar
+
+| Dosya (kaynak) | Ne değişti | Neden |
+|---|---|---|
+| `sayfalar/senaryolar.html` | 5 senaryo 7 başlığa genişledi (durum, bugün ne kadar sürüyor, yapay zeka ne yapar, nerede durur, neye dokunmaz, ne değişir, sınırı); 6 yeni senaryo; üç grup (Satın alma 6, Şirket içi bilgi 3, Güvenlik 2); varsayım notu; sonda "Bunları nasıl ölçüyoruz" | Görev 1 |
+| `sayfalar/paketler.html` | Tablonun altına "Fiyatı ne belirler" (4 madde); "Paket fiyatları neden sitede yok" cevabı netleşti. Fiyat yazılmadı, pilot ücreti duruyor | Görev 2 |
+| `sayfalar/projeler.html` | Kayıt tablosu (proje, alan, durum, amaç); ARBITER kartı; Control Plane kanıtına kaynak; VARUX Control ve Analytics'e "paylaşılan ölçüm yok"; SENTINEL "Fikir aşaması / Henüz geliştirilmedi". ABYSS, ATLAS, ORBIT yok | Görev 3 |
+| `sayfalar/hakkimizda.html` | "VARUX nedir" kutusu (4 cümle); "Kurucumuz daha önce VARUX çatısı altında AXIS… geliştirdi"; aşama cümlesi: "Henüz ücretli müşterimiz yok; ilk pilotu yapacağımız firmayı arıyoruz." | Görev 4 |
+| `sayfalar/index.html` + `js/app.js` | Satın alma kartında Onayla / Reddet çalışıyor; asistan kartında 3 hazır soru (serbest metin yok) | Görev 6 |
+| `js/app.js` | Senaryo oynatıcısı grupları ve 7 adımı destekliyor ("Tümünü göster" artık adım sayısına bakıyor) | Yeni yapı |
+| `ortak/stil.css` | Gruplar, fiyat kutusu, kayıt tablosu, örnek ekran durumları | |
+| `js/i18n-en.js` | 164 yeni İngilizce karşılık; çevrilmeyen yalnızca özel adlar (AXIS, Rust…) | TR/EN çalışmaya devam etsin |
+
+## Örnek ekran nasıl çalışıyor
+- **Onayla:** "Sipariş taslağı hazırlandı" (sipariş *verildi* denmiyor). Özet, kayıt satırı (tarih, "Demo kullanıcı", karar, gerekçe) ve kayıt özeti görünür.
+  - Kayıt özeti, tarayıcıda hesaplanan gerçek bir SHA-256. Her yeni karar bir öncekinin özetiyle zincirleniyor.
+  - Özet **imzalanmıyor**; ekranda "gerçek sistemde kayıt imzalanır ve bir önceki kayda zincirlenir" yazıyor.
+- **Reddet:** 3 gerekçe gelir; seçince kayıt "Reddedildi · satın almacıya iade edildi" olur. Yeni öneri üretilmez.
+- **Baştan al:** kart ilk haline döner; odak Onayla düğmesine gider.
+- **Erişilebilirlik:** hepsi gerçek `<button>`. Durum değişince odak taşınır ve `aria-live` ile duyurulur. Hareket azaltma açıksa animasyon yok.
+- **JS kapalıyken** düğmeler `disabled` görünür.
+- **Sunucu:** hiçbir istek gitmez.
+- **Görünürlük:** "Örnek ekran · rakamlar kurgusal" her durumda görünüyor. Geniş ekranda hazır sorular, üstüne binen satın alma kartının altında kalmasın diye sola sıkıştırıldı; tüm düğmelerin tıklanabildiği ölçüldü.
+
+## Senaryolardaki süre aralıkları ve dayandıkları varsayım
+Hepsi bizim tahminimiz, ölçülmüş veri değil. Sayfada da böyle yazıyor.
+
+| Senaryo | Bugün | Varsayım | "Ne değişir"deki hedef |
+|---|---|---|---|
+| 1 Teklif | 2-4 saat / talep | 3 tedarikçiye e-posta, cevap takibi, tabloya elle geçirme | 1-2 saatlik hazırlığı sistemin üstlenmesi |
+| 2 Gecikme | 1-3 saat / hafta | Açık sipariş listesini çıkarıp tek tek kontrol, hatırlatma yazma | 15-30 dakikalık kontrol |
+| 3 Bölünmüş | 15-30 dk / şüpheli sipariş | Ay sonu geriye dönük inceleme | süre yok; kontrol sipariş anına geliyor |
+| 4 Mükerrer | 1-3 saat | İade, iptal, fatura düzeltme yazışması | süre yok |
+| 5 Anormal ucuz | 15-45 dk / teklif | Birim, kapsam, tedarikçi doğrulama | süre yok |
+| 6 Yeni tedarikçi | birkaç gün - birkaç hafta | Tedarikçi onay süreci; sistem bunu **değiştirmez** | süre yok |
+| 7 Vardiya şefi | 10-30 dk | Klasörde arama; ulaşılamazsa sabahı bekleme | aramanın birkaç dakikaya inmesi |
+| 8 Yeni çalışan | 5-20 dk / soru | Soran + cevaplayanın zamanı | belgeden cevaplanan soru sayısı ölçülüyor |
+| 9 Çelişki | 30 dk - 4 saat | Doğru değeri bulmak için yazışma | süre yok |
+| 10, 11 Güvenlik | — | Bu riskin elle yürüyen süreçte karşılığı yok | — |
+
+Yüzde, para kazancı ya da işten çıkarma imasına yer verilmedi. "Ne değişir" cümleleri "aynı kişi tekrarlı işten kurtulur" çerçevesinde yazıldı.
+
+## Sorular
+1. **Senaryo 6 ("Aynı malzemeyi geçen sefer kimden, kaça aldık?") yazılmadı.**
+   - Üründe geçmiş siparişlere soru soran bir özellik yok. Asistan yalnızca belgelerde arıyor.
+   - Kalem başına son alım fiyatı (`erp_last_prices`) yalnızca karşılaştırma ve fiyat sapması kontrolünde kullanılıyor; tedarikçi adı da gösterilmiyor.
+   - Bu senaryo için önce özelliğin geliştirilmesi gerekiyor. İsterseniz eklenir.
+2. **Anormal ucuz teklif** brief'teki "geçmiş ortalama" ile değil, iki kontrolle çalışıyor. Sayfada ürünün yaptığı yazıldı, eşik rakamları verilmedi ("ayarlanabilir").
+   - Diğer tekliflerin ortancasından belirgin biçimde ucuz olan teklif işaretlenir ve öneri olarak seçilmez (eşik %40).
+   - Son alım fiyatından sapan teklif (±%15) işaretlenir ve onay kademesini bir üste çıkarır.
+3. **Mükerrer kontrol** taleplerde değil siparişlerde çalışıyor; tanımı dar (aynı tedarikçi, kalem, miktar, fiyat, 7 gün). Gerçekten tekrar gereken siparişi de durduruyor; bu "Sınırı" kısmına yazıldı.
+4. **Yeni tedarikçi:** üründe "talebi satın almacıya yönlendirme" diye ayrı bir akış yok. Sipariş kodla durduruluyor ve gerekçe görünüyor; sayfa böyle anlatıyor.
+5. **SENTINEL:** eski metin "bir yazılım geliştirdik / İlk proje" diyordu, brief "Fikir aşaması" diyor. Brief'e uydum ("Henüz geliştirilmedi"). Doğru mu?
+6. **ARBITER:** elimde yalnızca brief'teki satır vardı; kart bu yüzden çok kısa (amaç + "henüz paylaşılan test sonucu yok"). Problem, teknoloji ya da kanıt eklemek isterseniz metni gönderin.
+7. **Ölçüm bölümü:** ürün doğruluğu ve kullanımı kayıtlarından çıkarıyor. "Harcanan insan saati" ise üründe otomatik ölçülmüyor; pilotta ekipten birlikte ölçülecek bir iş. Sayfa bunu söz olarak veriyor; uygun mu?
+8. **Asistan örnek cevapları kurgusal:** "ön ısıtma değişimden 30 dakika önce, Rev. 2 Madde 3.1" ve "belge bulunamadı" örneği. Hepsi "rakamlar kurgusal" etiketinin altında.
+9. **AXIS kanıt bağlantısı** (`docs.varuxcyber.com`) istediğiniz gibi bırakıldı. O sitedeki iki bölüm, bağlantı paylaşılmadan önce düzeltilmeli.
+10. **İngilizce karşılıklar** benim çevirim; bir göz atmanız iyi olur.
