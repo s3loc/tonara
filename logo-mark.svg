@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Logo işareti">
+  <!-- Mantis işareti. Renk currentColor'dan gelir (dosya olarak açılınca #26292C).
+       Tek renk kullanım: class="eye" olan daireyi silin; göz, başta boşluk olarak kalır. -->
+  <g color="#26292C" fill="currentColor">
+    <path fill-rule="evenodd" d="M40 9 55 7.5 49.5 20Z M48.3 11.5a2.2 2.2 0 1 0 4.4 0a2.2 2.2 0 1 0 -4.4 0Z"/>
+    <path d="M43 17 47 18.5 38.5 41 34.5 39.5Z"/>
+    <path d="M37 37 19 37 2 41.5 19 43.5 37 42Z"/>
+    <g fill="none" stroke="currentColor" stroke-width="2.8" stroke-linejoin="miter" stroke-miterlimit="10">
+      <polyline points="43.5,23.5 55,34 52,22.5"/>
+      <polyline points="35,42 44,48 46,60"/>
+      <polyline points="33,42.5 29,50 32,60"/>
+      <polyline points="27,43 19,49 20,60"/>
+      <line x1="54" y1="8" x2="62" y2="2.5"/>
+    </g>
+  </g>
+  <circle class="eye" cx="50.5" cy="11.5" r="2.2" fill="#A6814C"/>
+</svg>

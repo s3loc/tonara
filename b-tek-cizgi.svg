@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="256" height="256">
+  <!-- Alternatif B: tek kalınlıkta çizgi. Elendi: 16-32px'te çizgiler birbirine karışıyor, gövde kuşa benziyor. -->
+  <rect width="64" height="64" fill="#FAF8F5"/>
+  <g fill="none" stroke="#26292C" stroke-width="2.5" stroke-linejoin="miter" stroke-miterlimit="10" stroke-linecap="square">
+    <polygon points="41,11 54,9 49.5,20"/>
+    <line x1="44" y1="18" x2="36" y2="40"/>
+    <polygon points="36,40 19,37.5 4,43 20,45.5"/>
+    <polyline points="44,23 52,35 49,24"/>
+    <polyline points="34,42 43,50 42,60"/>
+    <polyline points="27,44 20,52 22,60"/>
+    <line x1="52" y1="9" x2="60" y2="3"/>
+  </g>
+  <circle cx="50" cy="12" r="2" fill="#A6814C"/>
+</svg>

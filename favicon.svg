@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Küçük boyut için sadeleştirilmiş mantis: kalın çizgi, büyük göz. Koyu temada açık renge döner. -->
+  <style>
+    .f { fill: #26292C; } .fs { stroke: #26292C; }
+    @media (prefers-color-scheme: dark) { .f { fill: #FAF8F5; } .fs { stroke: #FAF8F5; } }
+  </style>
+  <path class="f" fill-rule="evenodd" d="M37 6 58 4 50 22Z M47 11a3.4 3.4 0 1 0 6.8 0a3.4 3.4 0 1 0 -6.8 0Z"/>
+  <path class="f" d="M42 16 48 18 39 43 33 41Z"/>
+  <path class="f" d="M37 36 18 36 1 41 18 46 37 43Z"/>
+  <g class="fs" fill="none" stroke-width="4.6" stroke-linejoin="miter" stroke-miterlimit="10">
+    <polyline points="43,23 57,35 53,22"/>
+    <polyline points="35,43 44,50 46,62"/>
+    <polyline points="26,44 18,51 19,62"/>
+  </g>
+  <circle cx="50.4" cy="11" r="3.4" fill="#A6814C"/>
+</svg>

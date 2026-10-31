@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="256" height="256">
+  <!-- Alternatif C: yarı soyut büst (baş, dik göğüs, katlanmış ön bacaklar). Elendi: küçük boyutta güçlü
+       ama mantis yerine "N" harfi ya da soyut bir figür gibi okunuyor. -->
+  <rect width="64" height="64" fill="#FAF8F5"/>
+  <polygon points="22,8 46,4 37,24" fill="#26292C"/>
+  <polygon points="29,22 35,24 26,60 20,58" fill="#26292C"/>
+  <polyline points="31,30 46,50 41,31" fill="none" stroke="#26292C" stroke-width="5" stroke-linejoin="miter" stroke-miterlimit="10"/>
+  <circle cx="39" cy="10" r="3.6" fill="#A6814C"/>
+</svg>
