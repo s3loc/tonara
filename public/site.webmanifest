@@ -1,0 +1,10 @@
+{
+  "name": "Tonara",
+  "short_name": "Tonara",
+  "lang": "tr",
+  "start_url": "./",
+  "display": "browser",
+  "background_color": "#f5f0e6",
+  "theme_color": "#f5f0e6",
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

@@ -1,0 +1,41 @@
+<!doctype html><html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Hizmetler — Tonara</title>
+<meta name="description" content="Sorgu optimizasyonu, pgvector ve RAG kurulumu, veritabanı migrasyonu, yedekleme, güvenlik ve PostgreSQL altyapı mimarisi.">
+<link rel="canonical" href="https://tonara.tech/hizmetler.html"><link rel="icon" href="favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#f5f0e6"><link rel="stylesheet" href="styles.css"><script src="script.js"></script></head><body>
+<a class="skip-link" href="#main">İçeriğe geç</a><header class="site-header"><div class="container nav-wrap"><a class="brand" href="index.html" aria-label="Tonara ana sayfa"><img src="logo-mark.svg" width="36" height="36" alt=""><span>Tonara</span></a><button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Menü</button><nav class="site-nav" id="site-nav" aria-label="Ana menü"><a href="hizmetler.html" aria-current="page">Hizmetler</a><a href="fiyatlar.html">Fiyatlar</a><a href="yaklasim.html">Yaklaşım</a><a href="hakkinda.html">Hakkında</a><a class="nav-cta" href="iletisim.html">Ücretsiz tarama</a></nav></div></header>
+<main id="main">
+<section class="page-hero"><div class="container"><p class="eyebrow">Hizmetler</p><h1>PostgreSQL katmanındaki somut sorunları çözüyoruz.</h1><p class="lead">Her işte önce sorunu ölçüyor; uygulanacak değişikliği ve teslim edilecek çıktıyı yazıya döküyoruz.</p></div></section>
+
+<section class="service-detail" id="query-optimizasyonu"><div class="container"><div class="service-title"><span class="service-index">01</span><h2>Sorgu Optimizasyonu</h2><span class="duration">2–5 gün</span></div><div class="detail-grid">
+<div class="detail-block"><h3>Sorun</h3><p>Sorgular yavaşladı, uygulama tıkanıyor ve nedeni belli değil.</p></div>
+<div class="detail-block"><h3>Ne yapıyoruz</h3><ul><li>EXPLAIN ANALYZE ile sorgu analizi</li><li>Eksik ve gereksiz indekslerin tespiti</li><li>İndeks stratejisinin yeniden kurgulanması</li><li>Vacuum ve autovacuum ayarları</li><li>Bağlantı havuzu kontrolü</li></ul></div>
+<div class="detail-block"><h3>Çıktı</h3><p>Öncesi ve sonrası ölçülmüş süre karşılaştırması ile uygulanan değişikliklerin yazılı dökümü.</p></div></div>
+<div class="inline-cta"><p>Önce en büyük etkiyi yaratan sorgulara bakıyoruz. Sağlık taraması ücretsizdir.</p><a class="button button-primary" href="iletisim.html?konu=query-optimizasyonu">Ücretsiz tarama isteyin →</a></div></div></section>
+
+<section class="service-detail" id="pgvector-rag"><div class="container"><div class="service-title"><span class="service-index">02</span><h2>pgvector / RAG Altyapısı</h2><span class="duration">5–10 gün</span></div><div class="detail-grid">
+<div class="detail-block"><h3>Sorun</h3><p>Ürüne yapay zekâ özelliği eklenecek, ancak vektör aramasının nasıl kurulacağı belli değil. Ya da mevcut kurulum beklenenden yavaş çalışıyor.</p></div>
+<div class="detail-block"><h3>Ne yapıyoruz</h3><ul><li>Şema tasarımı ve pgvector kurulumu</li><li>HNSW indeks ayarı</li><li>Embedding üretim hattı</li><li>Hibrit arama: anahtar kelime + vektör</li><li>Bellek ve performans ayarları</li></ul></div>
+<div class="detail-block"><h3>Çıktı</h3><p>Çalışan arama altyapısı, örnek sorgular ve ölçülmüş gecikme değerleri.</p></div></div>
+<p class="service-note"><strong>Ayrı bir vektör veritabanı gerekmez.</strong> Verileriniz mevcut PostgreSQL içinde kalır; erişim ve yedekleme düzeniniz bölünmez.</p>
+<div class="inline-cta"><p>Veri hacmini, sorgu örüntüsünü ve hedeflenen gecikmeyi birlikte inceliyoruz.</p><a class="button button-primary" href="iletisim.html?konu=pgvector-rag">Ücretsiz tarama isteyin →</a></div></div></section>
+
+<section class="service-detail" id="veritabani-migrasyonu"><div class="container"><div class="service-title"><span class="service-index">03</span><h2>Veritabanı Migrasyonu</h2><span class="duration">5–15 gün</span></div><div class="detail-grid">
+<div class="detail-block"><h3>Sorun</h3><p>MySQL'den PostgreSQL'e geçmeniz, kendi sunucunuzdan buluta taşınmanız veya sağlayıcı değiştirmeniz gerekiyor.</p></div>
+<div class="detail-block"><h3>Ne yapıyoruz</h3><ul><li>Şema dönüşümü</li><li>Veri taşıma</li><li>Bütünlük doğrulaması</li><li>Bağlantı havuzu yapılandırması</li><li>Geri dönüş planı</li></ul></div>
+<div class="detail-block"><h3>Çıktı</h3><p>Çalışan yeni ortam, veri doğrulama raporu ve yazılı kesinti planı. Süre veri hacmine göre belirlenir.</p></div></div>
+<div class="inline-cta"><p>Taşınacak veriyi ve kabul edilebilir kesinti süresini ücretsiz inceliyoruz.</p><a class="button button-primary" href="iletisim.html?konu=migrasyon">Ücretsiz tarama isteyin →</a></div></div></section>
+
+<section class="service-detail" id="yedekleme-guvenlik"><div class="container"><div class="service-title"><span class="service-index">04</span><h2>Yedekleme, Kurtarma ve Güvenlik</h2><span class="duration">3–7 gün</span></div><div class="detail-grid">
+<div class="detail-block"><h3>Sorun</h3><p>Yedek alınıyor ama geri yükleme hiç denenmedi. Kimin neye eriştiği de izlenmiyor.</p></div>
+<div class="detail-block"><h3>Ne yapıyoruz</h3><ul><li>Otomatik yedekleme kurulumu</li><li>Belirli bir ana geri dönüş (PITR)</li><li>Geri yükleme tatbikatı</li><li>Rol ve erişim kontrolü</li><li>Denetim kayıtları ve şifreleme</li></ul></div>
+<div class="detail-block"><h3>Çıktı</h3><p>Test edilmiş kurtarma prosedürü ve yazılı kurtarma kılavuzu. Yedeğin nerede durduğu, ne sıklıkta alındığı ve nasıl doğrulandığı açıktır.</p></div></div>
+<div class="inline-cta"><p>Mevcut yedekleri ve erişim modelini ücretsiz sağlık taramasında kontrol ediyoruz.</p><a class="button button-primary" href="iletisim.html?konu=yedekleme-guvenlik">Ücretsiz tarama isteyin →</a></div></div></section>
+
+<section class="service-detail" id="ag-altyapi"><div class="container"><div class="service-title"><span class="service-index">05</span><h2>Ağ ve Altyapı Mimarisi</h2><span class="duration">Teklif üzerine</span></div><div class="detail-grid">
+<div class="detail-block"><h3>Sorun</h3><p>Veritabanı katmanı büyüdü. Replikasyonun, yük dağılımının ve arıza senaryolarının tasarlanması gerekiyor.</p></div>
+<div class="detail-block"><h3>Ne yapıyoruz</h3><ul><li>Bağlantı yönetimi</li><li>Replikasyon topolojisi</li><li>Okuma kopyası (read replica) yapılandırması</li><li>Ağ izolasyonu ve yük devretme (failover)</li><li>Kapasite planlaması</li></ul></div>
+<div class="detail-block"><h3>Çıktı</h3><p>Mimari dokümanı ve üzerinde anlaştığımız yapılandırmanın uygulanmış hali. Süre, kapsam görüldükten sonra netleşir.</p></div></div>
+<div class="inline-cta"><p>Mevcut topolojiyi ücretsiz inceliyor, ele alınması gereken riskleri önem sırasına koyuyoruz.</p><a class="button button-primary" href="iletisim.html?konu=altyapi-mimarisi">Ücretsiz tarama isteyin →</a></div></div></section>
+</main>
+<footer class="site-footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a class="brand" href="index.html"><img src="logo-mark.svg" width="36" height="36" alt=""><span>Tonara</span></a><p>PostgreSQL performansı, güvenliği ve yapay zekâ altyapısında uzman teknik hizmet.</p></div><nav class="footer-nav" aria-label="Hizmet bağlantıları"><h2>Hizmetler</h2><a href="hizmetler.html">Tüm hizmetler</a><a href="fiyatlar.html">Fiyatlar</a><a href="yaklasim.html">Yaklaşım</a></nav><nav class="footer-nav" aria-label="Şirket bağlantıları"><h2>Tonara</h2><a href="hakkinda.html">Hakkında</a><a href="iletisim.html">İletişim</a><a href="mailto:merhaba@tonara.tech">merhaba@tonara.tech</a></nav></div><div class="footer-bottom"><span>© <span data-year>2026</span> Tonara</span><span>PostgreSQL · Rust · Python</span></div></div></footer>
+</body></html>

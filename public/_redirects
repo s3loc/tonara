@@ -1,0 +1,20 @@
+/hizmetler  /hizmetler.html  200
+/fiyatlar   /fiyatlar.html   200
+/yaklasim   /yaklasim.html   200
+/hakkinda   /hakkinda.html   200
+/iletisim   /iletisim.html   200
+/en         /en/index.html      200
+/en/        /en/index.html      200
+/en/services  /en/services.html  200
+/en/pricing   /en/pricing.html   200
+/en/approach  /en/approach.html  200
+/en/about     /en/about.html     200
+/en/contact   /en/contact.html   200
+
+/pilot       /iletisim  301
+/paketler    /fiyatlar   301
+/senaryolar  /hizmetler  301
+/guvenlik    /hizmetler  301
+/muhakeme    /yaklasim   301
+/hakkimizda  /hakkinda   301
+/projeler    /hizmetler  301
